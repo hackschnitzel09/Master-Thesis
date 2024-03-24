@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div id="message"></div>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div class="task-actions">
+            <h3>Task bearbeiten</h3>
+            <input type="text" id="taskIdInput" class="input-field" placeholder="Enter Task ID">
+            <button onclick="editTask()" class="button">Edit Task</button>
+            <button onclick="deleteTask()" class="button">Delete Task</button>
+        </div>
+        <div class="task-actions">
+            <h3>Task hinzufügen</h3>
+            <input type="text" id="newTaskInput" class="input-field" placeholder="Enter new task title">
+            <button onclick="addTask()" class="button">Add Task</button>
+        </div>
+        <div class="task-actions">
+            <h3>Tasks:</h3>
+            <div id="tasks" class="task-list"></div>
+        </div>
+        <div id="selectedTask"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
