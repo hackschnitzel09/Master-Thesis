@@ -1,0 +1,61 @@
+version: "3.8"
+
+# Ports:
+# backend: 5011
+# frontendapi: 8081
+# frontendamqp: 8082
+# frontend wrapper: 8080
+# backend wrapper: egal, da auf amqp gelauscht wird
+#amqp management tool port 15672
+
+services:
+  backend:
+    build: 
+      context: ./backend/
+      target: backend
+    ports:
+      - 5011:5011
+  backendwrapper:
+    build: 
+      context: ./backend/
+      target: wrapper
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+
+  frontendapi:
+    build: 
+      context: ./frontend/
+      target: frontendapi
+    ports:
+      - 8081:80
+
+  frontendamqp:
+    build: 
+      context: ./frontend/
+      target: frontendamqp
+    ports:
+      - 8082:80
+
+  frontendwrapper:
+    build: 
+      context: ./frontend/
+      target: wrapper
+    ports:
+      - 8080:8080
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+
+
+  rabbitmq:
+    #image: rabbitmq:3.8.23
+    image: rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:15672"]
+      interval: 1s
+      timeout: 5s
+      retries: 100
